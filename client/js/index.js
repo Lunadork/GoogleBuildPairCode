@@ -108,7 +108,6 @@ function getRandomResult() {
 
 //get specific result
 function getSpecific(searchTerm) {
-  toggleView();
   //Create an array where we're gonna push all our found results
   let resultArr = [];
   let templateData;
@@ -146,16 +145,16 @@ function getSpecific(searchTerm) {
           }
         }
       });
-      try {
-        let template = Handlebars.compile(
-          document.querySelector("#template").innerHTML
-        );
-
-        let filled = template(templateData);
-        document.querySelector(".results--list").innerHTML = filled;
-      } catch (e) {
-        alert(e);
+      if (!templateData) {
+        throw new Error("Search query matched with 0 results");
       }
+      toggleView();
+      let template = Handlebars.compile(
+        document.querySelector("#template").innerHTML
+      );
+
+      let filled = template(templateData);
+      document.querySelector(".results--list").innerHTML = filled;
     })
     .catch((error) => alert(error));
 }
