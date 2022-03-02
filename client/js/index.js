@@ -42,40 +42,76 @@ function buttonInputHandler(submitEvent) {
       //Send the term to the getSpecific function
       getSpecific(searchTerm);
     }
+  } else if (choice === "search") {
+    console.log("searchAll");
+    getAllResults();
   }
 }
 
+const getAllResults = () => {
+  toggleView();
+  fetch("http://localhost:3000/searchAll")
+    .then((resp) => resp.json())
+    //do things with the JSON
+    .then((data) => {
+      let templateData = data;
+      templateData.forEach((item) => {
+        item.tags = item.tags.split(",");
+      });
+      try {
+        let template = Handlebars.compile(
+          document.querySelector("#template--all").innerHTML
+        );
+        console.log("done 1");
+        console.log(templateData);
+        let filled = template(templateData);
+        document.querySelector(".results--list").innerHTML = filled;
+
+        console.log("done 2");
+      } catch (e) {
+        alert(e);
+      }
+    })
+    .catch((error) => alert("Encountered error, detail: " + error));
+};
 //get random result
 function getRandomResult() {
+  console.log("clicked");
   // Change to result view
-  document.querySelector("body").classList.toggle("flex");
-  document.querySelector(".search--container").classList.toggle("hide");
-  document.querySelector(".results").classList.toggle("hide");
+  toggleView();
 
   //fetch the json
   fetch("http://localhost:3000/random")
     .then((resp) => resp.json())
     //do things with the JSON
     .then((data) => {
+      console.log(Handlebars.render);
       let templateData = {
+        title: data.title,
+        description: data.description,
         url: data.url,
         tags: data.tags.split(","),
       };
-      let template = Handlebars.compile(
-        document.querySelector("#template").innerHTML
-      );
+      try {
+        let template = Handlebars.compile(
+          document.querySelector("#template").innerHTML
+        );
 
-      let filled = template(templateData);
-      document.querySelector(".results--list").innerHTML = filled;
+        let filled = template(templateData);
+        document.querySelector(".results--list").innerHTML = filled;
+      } catch (e) {
+        alert(e);
+      }
     })
     .catch((error) => alert("Encountered error, detail: " + error));
 }
 
 //get specific result
 function getSpecific(searchTerm) {
+  toggleView();
   //Create an array where we're gonna push all our found results
   let resultArr = [];
-
+  let templateData;
   //Create an array we can keep possible tags in
   let possibleTags = [];
 
@@ -93,7 +129,7 @@ function getSpecific(searchTerm) {
         //remake our possible tags array with split data from tags on current object in data
         console.log(data);
         possibleTags = data.tags.split(",");
-        console.log("Poss tags : " + possibleTags);
+        // console.log("Poss tags : " + possibleTags);
 
         //then loop through our list of possible tags
         for (let i = 0; i < possibleTags.length; i++) {
@@ -101,37 +137,41 @@ function getSpecific(searchTerm) {
           if (target.includes(possibleTags[i])) {
             console.log("pushing " + data.url + " onto array");
             //Push it onto the array.
-            resultArr.push(data);
+            templateData = {
+              title: data.title,
+              description: data.description,
+              url: data.url,
+              tags: data.tags.split(","),
+            };
           }
         }
       });
-      displayResults(resultArr);
+      try {
+        let template = Handlebars.compile(
+          document.querySelector("#template").innerHTML
+        );
+
+        let filled = template(templateData);
+        document.querySelector(".results--list").innerHTML = filled;
+      } catch (e) {
+        alert(e);
+      }
     })
     .catch((error) => alert(error));
 }
 
-function displayResults(resultArr) {
-  resultArr.forEach((data) => {
-    console.log(
-      data.url +
-        " tags " +
-        data.tags +
-        " title " +
-        data.title +
-        " description " +
-        data.description
-    );
-  });
-}
-
-// Changing View
-
+// To redirect back to search
 let logo = document.querySelector(".results--logo");
 logo.addEventListener("click", () => {
-  console.log("hello");
+  window.location.replace("http://localhost:5500/GoogleBuildPairCode/client/");
+});
+
+// Changing View
+// Used to toggle our Screens/Views
+let toggleView = () => {
   document.querySelector("body").classList.toggle("flex");
   document.querySelector(".search--container").classList.toggle("hide");
   document.querySelector(".results").classList.toggle("hide");
-});
+};
 
-window.alert = function () {};
+// window.alert = function () {};

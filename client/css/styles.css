@@ -52,6 +52,7 @@ body {
   border: none;
   outline: none;
   margin-left: 0.8rem;
+  width: 100%;
 }
 
 .icon--container {

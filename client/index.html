@@ -10,7 +10,9 @@
     <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
     <title>Google Clone</title>
   </head>
+  <!-- Class of flex is toggled off when view is switched to results -->
   <body class="flex">
+    <!-- This section has a class hide which is toggled when view is switched to results -->
     <section class="search--container">
       <img class="main--logo" src="./images/Logo.png" alt="" />
 
@@ -39,6 +41,11 @@
         </div>
       </form>
     </section>
+
+    <!-- Results Page/View -->
+    <!-- This section is initally hidden -->
+    <!-- This section has a class hide which is toggled when view is switched to results -->
+
     <section class="results hide">
       <header class="results--header">
         <img class="results--logo" src="./images/small-logo.png" alt="" />
@@ -64,10 +71,8 @@
         <script id="template" type="text/x-handlebars-template">
           <div class="result">
             <cite class="result--url" role="text">{{url}}</cite>
-            <a href="" class="result--title">JavaScript - MDN Web Docs</a>
-            <span class="result--description">JavaScript (JS) is a lightweight,
-              interpreted, or just-in-time compiled programming language with
-              first-class functions.</span>
+            <a href="" class="result--title">{{title}}</a>
+            <span class="result--description">{{description}}</span>
             <span class="result--tags">
               {{#each tags}}
                 <a
@@ -81,15 +86,13 @@
           </div>
         </script>
         <script id="template--all" type="text/x-handlebars-template">
-          {{#with dta}}
+          {{#each .}}
             <div class="result">
-              <p>{{this}}</p>
+
               <cite class="result--url" role="text">{{url}}</cite>
-              <a href="" class="result--title">JavaScript - MDN Web Docs</a>
-              <span class="result--description">JavaScript (JS) is a
-                lightweight, interpreted, or just-in-time compiled programming
-                language with first-class functions.</span>
-              <!-- <span class="result--tags">
+              <a href="" class="result--title">{{title}}</a>
+              <span class="result--description">{{description}}</span>
+              <span class="result--tags">
                 {{#each tags}}
                   <a
                     class="result--tag"
@@ -98,9 +101,9 @@
                   </a>
                   ·
                 {{/each}}
-              </span> -->
+              </span>
             </div>
-          {{/with}}
+          {{/each}}
         </script>
       </div>
     </section>
