@@ -132,6 +132,50 @@ input[type="text"]:focus .search {
   width: 25px;
 }
 .results--header input[type="text"] {
-  font-size: 90%;
+  font-size: 75%;
   width: 100%;
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+.results--list {
+  margin-top: 3rem;
+  margin-left: 190px;
+}
+
+.result--url {
+  color: #202124;
+  font-style: normal;
+  font-size: 14px;
+}
+
+.result--title {
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.result--description {
+  color: #4d5156;
+  font-size: 14px;
+  min-width: 1ch;
+  flex-wrap: wrap;
+}
+
+.result--tags {
+  display: flex;
+  align-items: center;
+  color: #1a0dab;
+}
+.result--tag {
+  text-decoration: none;
+  font-size: 14px;
+  color: #1a0dab;
+  margin-right: 1rem;
+}
+.result--tag:not(:first-child) {
+  margin-left: 1rem;
 }
