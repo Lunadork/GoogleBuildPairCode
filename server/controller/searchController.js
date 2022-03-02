@@ -38,4 +38,9 @@ router.get('/random', (req,res) =>
     }
 });
 
+router.get('/', (req,res) =>
+{
+   // res.sendFile("/client/index.html", { root: '..' });
+});
+
 module.exports = router;
