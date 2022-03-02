@@ -3,7 +3,6 @@
 //form.addEventListener('submit',getAllResults)
 
 
-
 // NEW CODE BELOW //
 
 //Get array of all submit buttons
@@ -31,18 +30,36 @@ function buttonInputHandler(submitEvent)
     {
         //DO SEARCH
         console.log("Search clicked");
-        getAllResults();
+        //Fetch a random result using the getRandomResult function
+        getRandomResult();
     }
-    else if (choice === "searchOnly")
+    else if (choice === "searchSpecific")
     {
         //DO SEARCH ONLY
         console.log("Search Only clicked");
+
+        //Get value of text entered.
+        let searchTerm = document.getElementById("searchBar").value;
+        console.log(searchTerm);
+
+        //check if searchTerm is empty.
+        if (searchTerm === "")
+        {
+            //alert user they input nothing
+            alert("Nothing input into search bar!")
+        }
+        else
+        {
+            //Send the term to the getSpecific function
+            getSpecific(searchTerm);
+        }
+
     }
 }
 
 
-//get all results
-function getAllResults ()
+//get random result
+function getRandomResult ()
 {
     //fetch the json
     fetch('http://localhost:3000/random')
@@ -52,3 +69,49 @@ function getAllResults ()
     .catch(error => alert("Encountered error, detail: " +error));
 
 }
+
+
+//get specific result
+    function getSpecific(searchTerm)
+    {
+        //Create an array where we're gonna push all our found results
+        let arr = [];
+
+        //Create an array we can keep possible tags in
+        let possibleTags=[];
+
+        //Change our term to an array of entered words, split via spaces
+        let target = searchTerm.split(" ");
+        
+        //Get ALL results
+        fetch('http://localhost:3000/searchAll')
+        .then(resp => resp.json())
+        //Do a thing with the data
+        .then(data =>
+        {
+            //Loop through our data one at a time
+            for (val in data)
+            {
+                //remake our possible tags array with split data from tags on current object in data
+                possibleTags = data.tags.split(",");
+
+                //then loop through our list of possible tags
+                for (let i = 0; i < possibleTags.length; i++)
+                {
+                    //and if any of our possible tags are included in our target terms...
+                    if (target.includes(possibleTags[i]))
+                    {
+                        //Push it onto the array.
+                        arr.push(data)
+                    }
+                }
+            }
+        
+        })
+        .then(console.log(arr))
+        .catch(error => alert(error));
+
+
+        
+
+    }

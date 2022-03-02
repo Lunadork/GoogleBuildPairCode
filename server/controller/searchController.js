@@ -40,6 +40,7 @@ router.get('/random', (req,res) =>
 
 router.get('/', (req,res) =>
 {
+    //I can't seem to get this to work correctly.
    // res.sendFile("/client/index.html", { root: '..' });
 });
 
