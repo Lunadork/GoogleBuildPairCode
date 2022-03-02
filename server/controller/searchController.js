@@ -40,7 +40,7 @@ router.get('/random', (req,res) =>
 
 router.get('/', (req,res) =>
 {
-    res.send("Not yet implemented")
+   // res.sendFile("/client/index.html", { root: '..' });
 });
 
 module.exports = router;
