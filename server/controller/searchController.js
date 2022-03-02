@@ -20,15 +20,15 @@ router.get('/random', (req,res) =>
 
     try 
     {
-        const quoteId = (Math.floor(Math.random() *14 +1)) ;
-        const selectedQuote = quote.findById(quoteId);
-        console.log(selectedQuote);
-            if (!selectedQuote) 
+        const searchId = (Math.floor(Math.random() *15 +1)) ;
+        const selectedResult = search.findById(searchId);
+        console.log(selectedResult);
+            if (!selectedResult) 
             {
                 throw new Error;
             }
         res.status(200);
-        res.send(JSON.stringify(selectedQuote, null, 2));
+        res.json(selectedResult)
     } 
     catch (err) 
     {
