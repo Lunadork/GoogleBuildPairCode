@@ -38,4 +38,9 @@ router.get('/random', (req,res) =>
     }
 });
 
+router.get('/', (req,res) =>
+{
+    res.send("Not yet implemented")
+});
+
 module.exports = router;
