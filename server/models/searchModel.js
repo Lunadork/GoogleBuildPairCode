@@ -1,11 +1,13 @@
 const searchData = require("../data/searchData.js");
 
 class Search {
-    constructor(id, url, tags)
+    constructor(id, url, tags, title, description)
     {
         this.id = id;
         this.url = url;
         this.tags = tags;
+        this.title = title;
+        this.description = description;
     }
 
     //get all
@@ -28,7 +30,7 @@ class Search {
         {
 			let arr = searchData.filter(search => search.id === id)[0];
 			console.log(searchData);
-			const search = new Search(arr.id, arr.url, arr.tags);
+			const search = new Search(arr.id, arr.url, arr.tags, arr.title, arr.description);
 			return search;
 		} 
         catch (err) 

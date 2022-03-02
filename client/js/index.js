@@ -104,13 +104,21 @@ function getRandomResult ()
                     //and if any of our possible tags are included in our target terms...
                     if (target.includes(possibleTags[i]))
                     {
-                        console.log("pushing " + data + " onto array");
+                        console.log("pushing " + data.url + " onto array");
                         //Push it onto the array.
                         resultArr.push(data);
                     }
                 }
             })
-            //displayResults(resultArr);
+            displayResults(resultArr);
         })
         .catch(error => alert(error));
+    }
+
+    function displayResults(resultArr)
+    {
+        resultArr.forEach(data =>
+        {
+            console.log(data.url + " tags " + data.tags + " title " + data.title + " description " + data.description );
+        });
     }
