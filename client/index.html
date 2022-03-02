@@ -75,7 +75,7 @@
         <script id="template" type="text/x-handlebars-template">
           <div class="result">
             <cite class="result--url" role="text">{{url}}</cite>
-            <a href="" class="result--title">{{title}}</a>
+            <a href="{{url}}" class="result--title">{{title}}</a>
             <span class="result--description">{{description}}</span>
             <span class="result--tags">
               {{#each tags}}
@@ -94,7 +94,7 @@
             <div class="result">
 
               <cite class="result--url" role="text">{{url}}</cite>
-              <a href="" class="result--title">{{title}}</a>
+              <a href="{{url}}" class="result--title">{{title}}</a>
               <span class="result--description">{{description}}</span>
               <span class="result--tags">
                 {{#each tags}}
