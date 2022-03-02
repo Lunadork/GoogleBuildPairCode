@@ -3,7 +3,6 @@
 //form.addEventListener('submit',getAllResults)
 
 
-
 // NEW CODE BELOW //
 
 //Get array of all submit buttons
@@ -31,18 +30,36 @@ function buttonInputHandler(submitEvent)
     {
         //DO SEARCH
         console.log("Search clicked");
-        getAllResults();
+        //Fetch a random result using the getRandomResult function
+        getRandomResult();
     }
-    else if (choice === "searchOnly")
+    else if (choice === "searchSpecific")
     {
         //DO SEARCH ONLY
         console.log("Search Only clicked");
+
+        //Get value of text entered.
+        let searchTerm = document.getElementById("searchBar").value;
+        console.log(searchTerm);
+
+        //check if searchTerm is empty.
+        if (searchTerm === "")
+        {
+            //alert user they input nothing
+            alert("Nothing input into search bar!")
+        }
+        else
+        {
+            //Send the term to the getSpecific function
+            getSpecific(searchTerm);
+        }
+
     }
 }
 
 
-//get all results
-function getAllResults ()
+//get random result
+function getRandomResult ()
 {
     //fetch the json
     fetch('http://localhost:3000/random')
@@ -51,4 +68,33 @@ function getAllResults ()
     .then(data => alert("found " + JSON.stringify(data.url) + " with tags " + JSON.stringify(data.tags)))
     .catch(error => alert("Encountered error, detail: " +error));
 
+}
+
+
+//get specific result
+{
+    function getSpecific(searchTerm)
+    {
+        //Create an array where we're gonna push all our found results
+        let arr = [];
+
+        //Change our term to an array of entered words, split via spaces
+        let target = searchTerm.split(" ");
+        
+        //Get ALL results
+        fetch('http://localhost:3000/searchAll')
+        .then(resp => resp.json())
+        //Do a thing with the data
+        .then(data =>
+        {
+
+            //create list of possible tags by data -- this feels messy
+            const possibleTags = data.tags.split(",");
+            
+        });
+        //Filter through the results for any containing our term
+
+        
+
+    }
 }
