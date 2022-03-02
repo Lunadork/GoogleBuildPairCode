@@ -72,11 +72,13 @@ function getRandomResult ()
 
 
 //get specific result
-{
     function getSpecific(searchTerm)
     {
         //Create an array where we're gonna push all our found results
         let arr = [];
+
+        //Create an array we can keep possible tags in
+        let possibleTags=[];
 
         //Change our term to an array of entered words, split via spaces
         let target = searchTerm.split(" ");
@@ -87,14 +89,29 @@ function getRandomResult ()
         //Do a thing with the data
         .then(data =>
         {
+            //Loop through our data one at a time
+            for (val in data)
+            {
+                //remake our possible tags array with split data from tags on current object in data
+                possibleTags = data.tags.split(",");
 
-            //create list of possible tags by data -- this feels messy
-            const possibleTags = data.tags.split(",");
-            
-        });
-        //Filter through the results for any containing our term
+                //then loop through our list of possible tags
+                for (let i = 0; i < possibleTags.length; i++)
+                {
+                    //and if any of our possible tags are included in our target terms...
+                    if (target.includes(possibleTags[i]))
+                    {
+                        //Push it onto the array.
+                        arr.push(data)
+                    }
+                }
+            }
+        
+        })
+        .then(console.log(arr))
+        .catch(error => alert(error));
+
 
         
 
     }
-}
