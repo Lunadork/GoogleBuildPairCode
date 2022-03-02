@@ -75,13 +75,14 @@ function getRandomResult ()
     function getSpecific(searchTerm)
     {
         //Create an array where we're gonna push all our found results
-        let arr = [];
+        let resultArr = [];
 
         //Create an array we can keep possible tags in
         let possibleTags=[];
 
         //Change our term to an array of entered words, split via spaces
         let target = searchTerm.split(" ");
+        console.log("target : " +target);
         
         //Get ALL results
         fetch('http://localhost:3000/searchAll')
@@ -90,10 +91,12 @@ function getRandomResult ()
         .then(data =>
         {
             //Loop through our data one at a time
-            for (val in data)
+            data.forEach(data =>
             {
                 //remake our possible tags array with split data from tags on current object in data
+                console.log(data);
                 possibleTags = data.tags.split(",");
+                console.log("Poss tags : " + possibleTags);
 
                 //then loop through our list of possible tags
                 for (let i = 0; i < possibleTags.length; i++)
@@ -101,17 +104,13 @@ function getRandomResult ()
                     //and if any of our possible tags are included in our target terms...
                     if (target.includes(possibleTags[i]))
                     {
+                        console.log("pushing " + data + " onto array");
                         //Push it onto the array.
-                        arr.push(data)
+                        resultArr.push(data);
                     }
                 }
-            }
-        
+            })
+            //displayResults(resultArr);
         })
-        .then(console.log(arr))
         .catch(error => alert(error));
-
-
-        
-
     }
