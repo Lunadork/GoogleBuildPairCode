@@ -1,0 +1,11 @@
+{
+    "scripts": {
+        "test": "jest --watchAll",
+        "start": "node server.js",
+        "start-dev": "open ../client/index.html & node server.js"
+    },
+    "dependencies": {
+        "cors": "^2.8.5",
+        "express": "^4.17.3"
+    }
+}
